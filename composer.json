@@ -1,0 +1,51 @@
+{
+  "name": "skcms/shop-bundle",
+
+"type": "symfony-bundle",
+
+"description": "Symfony SKCMS Shop Bundle by SOLID-kiss",
+
+"keywords": [],
+
+"license": "GPL-3.0+",
+
+"authors": [
+
+{
+
+"name":   "Jonathan Cambier",
+
+"email": "jona@solid-kiss.be",
+
+"homepage": "http://www.solid-kiss.be"
+
+}
+
+],
+
+"require": {
+
+"php": ">=5.3.2",
+
+"symfony/framework-bundle":         ">=2.3-dev",
+
+"twig/twig":                        "*",
+
+"doctrine/doctrine-bundle":         "*",
+"skcms/core-bundle":         "dev-master"
+
+
+
+},
+
+"autoload": {
+
+"psr-0": { "SKCMS\\ShopBundle":   "" }
+
+},
+
+"target-dir": "SKCMS/ShopBundle",
+
+"minimum-stability":   "dev"
+
+}
