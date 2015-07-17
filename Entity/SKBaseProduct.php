@@ -45,7 +45,7 @@ class SKBaseProduct extends SKBaseEntity
     
     /**
      *
-     * @ORM\OneToOne(targetEntity="SKCMS\ShopBundle\Entity\Price")
+     * @ORM\OneToOne(targetEntity="SKCMS\ShopBundle\Entity\Price",cascade="all")
      */
     protected $price;
     

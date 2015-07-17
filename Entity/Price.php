@@ -34,7 +34,13 @@ class Price
      */
     protected $currency;
     
+    public function __construct() {
+        $this->currency = new Currency(); 
+    }
     
+    public function __toString() {
+        return $this->amount.$this->currency->getSymbol();
+    }
 
     /**
      * Get id
