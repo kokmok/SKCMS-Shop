@@ -1,3 +1,0 @@
-skcms_shop_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: SKCMSShopBundle:Default:index }

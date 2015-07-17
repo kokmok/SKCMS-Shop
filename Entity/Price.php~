@@ -1,0 +1,76 @@
+<?php
+
+namespace SKCMS\ShopBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Price
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="SKCMS\ShopBundle\Entity\PriceRepository")
+ */
+class Price
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="amount", type="float")
+     */
+    private $amount;
+    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Currency")
+     */
+    protected $currency;
+    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\SKBaseProduct",inversedBy="price")
+     */
+    protected $product;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param float $amount
+     * @return Price
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return float 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+}
