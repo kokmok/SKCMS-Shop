@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class CartProduct
 {
@@ -34,8 +35,10 @@ class CartProduct
     private $cart;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="SKCMS\CoreBundle\Entity\EntityReference",cascade="all")
      */
+    private $productReference;
+    
     private $product;
     
     
@@ -105,7 +108,7 @@ class CartProduct
     public function setProduct(\SKCMS\ShopBundle\Entity\Product $product = null)
     {
         $this->product = $product;
-
+        
         return $this;
     }
 
@@ -117,5 +120,34 @@ class CartProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set productReference
+     *
+     * @param \SKCMS\CoreBundle\Entity\EntityReference $productReference
+     * @return CartProduct
+     */
+    public function setProductReference(\SKCMS\CoreBundle\Entity\EntityReference $productReference = null)
+    {
+        $this->productReference = $productReference;
+
+        return $this;
+    }
+
+    /**
+     * Get productReference
+     *
+     * @return \SKCMS\CoreBundle\Entity\EntityReference 
+     */
+    public function getProductReference()
+    {
+        return $this->productReference;
+    }
+    
+    
+    public function onLoad()
+    {
+        $this->setProduct($this->productReference->getEntity()); 
     }
 }

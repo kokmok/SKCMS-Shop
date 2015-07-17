@@ -43,7 +43,7 @@ class Command
     private $feeTVAC;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\CommandStatus")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\CommandStatus")
      */
     private $status;
 

@@ -12,7 +12,16 @@ use SKCMS\CoreBundle\Slug\SKSlug as SKSlug;
  * 
  */
 
-class SKBaseProduct extends SKBaseEntity{
+class SKBaseProduct extends SKBaseEntity
+{
+   
+   
+    
+    /** 
+     * @ORM\Column(name="id",type="integer") 
+     */
+    protected $id;
+    
     /**
      * @Gedmo\Slug(fields={"title"},updatable=false)
      * @Gedmo\Translatable
@@ -36,9 +45,9 @@ class SKBaseProduct extends SKBaseEntity{
     
     /**
      *
-     * @ORM\OneToMany(targetEntity="SKCMS\ShopBundle\Entity\Price",mappedBy="product")
+     * @ORM\OneToOne(targetEntity="SKCMS\ShopBundle\Entity\Price")
      */
-    protected $prices;
+    protected $price;
     
     /**
      *
@@ -119,19 +128,15 @@ class SKBaseProduct extends SKBaseEntity{
         return $this->category;
     }
     
-    public function addPrice(Price $price)
+   
+    public function getPrice()
     {
-        $this->prices->add($price);
-        return $this;
+        return $this->price;
     }
-    public function removePrice(Price $price)
+    public function setPrice(Price $price)
     {
-        $this->prices->remove($price);
+        $this->price = $price;;
         return $this;
-    }
-    public function getPrices()
-    {
-        return $this->prices;
     }
     
     public function setPromotion(Promotion $promotion)

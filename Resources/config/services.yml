@@ -1,4 +1,5 @@
 services:
-#    skcms_shop.example:
-#        class: SKCMS\ShopBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    skcms_shop.cartproductLoader:
+        class: SKCMS\ShopBundle\Listener\cartProductLoader
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
