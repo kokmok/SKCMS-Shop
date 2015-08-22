@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="SKCMS\ShopBundle\Entity\DeliveryRuleRepository")
  */
-class DeliveryRule extends \SKCMS\CoreBundle\Entity\SKBaseEntity
+class DeliveryRule
 {
     /**
      * @var integer
@@ -126,5 +126,16 @@ class DeliveryRule extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     public function getFee()
     {
         return $this->fee;
+    }
+    
+    public function setDelivery(Delivery $delivery)
+    {
+        $this->delivery = $delivery;
+        return $this;
+    }
+    
+    public function getDelivery()
+    {
+        return $this->delivery;
     }
 }

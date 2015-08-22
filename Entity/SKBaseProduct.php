@@ -39,7 +39,7 @@ class SKBaseProduct extends SKBaseEntity
     
     /**
      *
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Category",inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Category")
      */
     protected $category;
     
@@ -51,21 +51,41 @@ class SKBaseProduct extends SKBaseEntity
     
     /**
      *
+     * @ORM\OneToOne(targetEntity="SKCMS\CoreBundle\Entity\SKImage",cascade="all")
+     */
+    protected $picture;
+    
+    /**
+     *
      * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Promotion")
      */
     protected $promotion;
+    
     /**
      *
      * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\VAT")
      */
     protected $vat;
     
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\ProductUnity")
+     */
+    protected $unity;
+    
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="weight",type="float",nullable=true)
+     */
+    protected $weight;
 
     
     public function __construct()
     {
         parent::__construct();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->weight = 0;
         
     }
     
@@ -135,7 +155,7 @@ class SKBaseProduct extends SKBaseEntity
     }
     public function setPrice(Price $price)
     {
-        $this->price = $price;;
+        $this->price = $price;
         return $this;
     }
     
@@ -159,6 +179,38 @@ class SKBaseProduct extends SKBaseEntity
     public function getVat()
     {
         return $this->vat;
+    }
+    
+    public function setUnity(ProductUnity $unity)
+    {
+        $this->unity = $unity;
+        return $this;
+    }
+    
+    public function getUnity()
+    {
+        return $this->unity;
+    }
+   
+    public function setPicture(\SKCMS\CoreBundle\Entity\SKImage $picture)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+    
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+        return $this;
     }
 
     

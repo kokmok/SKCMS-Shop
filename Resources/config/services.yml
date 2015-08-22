@@ -3,3 +3,32 @@ services:
         class: SKCMS\ShopBundle\Listener\cartProductLoader
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+    skcms_shop.orderstatuslistener:
+        class: SKCMS\ShopBundle\Listener\OrderStatusListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+    skcms_shop.orderlistener:
+        class: SKCMS\ShopBundle\Listener\OrderListener
+        arguments: [@event_dispatcher]
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+#            - { name: doctrine.event_listener, event: prePersist }
+    
+    skcms_shop.orderstatusnotification:
+        class: SKCMS\ShopBundle\Listener\OrderStatusNotifications
+        arguments: [@service_container,@twig]
+        tags:
+            - { name: kernel.event_listener, event: order_status_changed, method: statusChanged }
+            
+    skcms_shop.categoryLoader:
+        class: SKCMS\ShopBundle\Listener\CategoryLoader
+        arguments: [%skcms_admin.entities%]
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+    skcms_shop.cartutils:
+        class: SKCMS\ShopBundle\Service\CartUtils
+        arguments: [@service_container]
+    skcms_shop.productutils:
+        class: SKCMS\ShopBundle\Service\ProductUtils
+        arguments: [@form.factory,@twig,@service_container,@skcms_shop.cartutils]

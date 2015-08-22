@@ -18,13 +18,18 @@ class cartProductLoader {
         
         if ($entity instanceof CartProduct) 
         {
-            $productReference = new EntityReference();
-            $productReference->setClassName(get_class($entity));
-            $productReference->setForeignKey($entity->getId());
+            if ($entity->getProductReference() === null)
+            {
+                $productReference = new EntityReference();
+                $productReference->setClassName(get_class($entity->getProduct()));
+                $productReference->setForeignKey($entity->getProduct()->getId());
+
+                $entity->setProductReference($productReference);
+            }
             
-            $entity->setProductReference($productReference);
             
         }
     }
     
+        
 }

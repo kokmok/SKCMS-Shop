@@ -34,6 +34,9 @@ class Price
      */
     protected $currency;
     
+    
+    
+    
     public function __construct() {
         $this->currency = new Currency(); 
     }

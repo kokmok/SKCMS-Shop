@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DeliveryRuleType extends AbstractType
+class CartType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -14,12 +14,8 @@ class DeliveryRuleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
-            ->add('name')
-            ->add('maxWeight')
-            ->add('fee')
-            
+            ->add('products','collection',['type'=>new CartProductType()])
         ;
     }
     
@@ -29,7 +25,7 @@ class DeliveryRuleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SKCMS\ShopBundle\Entity\DeliveryRule'
+            'data_class' => 'SKCMS\ShopBundle\Entity\Cart'
         ));
     }
 
@@ -38,6 +34,6 @@ class DeliveryRuleType extends AbstractType
      */
     public function getName()
     {
-        return 'skcms_shopbundle_deliveryrule';
+        return 'ch_shopbundle_cart';
     }
 }

@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class CartRepository extends EntityRepository
 {
+    
+    public function find($id)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->where('c.id=:id')
+            ->setParameter('id', $id)
+            ->join('c.products', 'p')
+            ->addSelect('p')
+            ->join('p.productReference', 'pr')
+            ->addSelect('pr')
+                
+                
+            ;
+        
+        return $qb->getQuery()->getSingleResult();
+    }
 }

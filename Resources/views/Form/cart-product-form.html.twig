@@ -1,0 +1,13 @@
+<form action="{{path('skcms_shop_addproduct')}}" method="post">
+        
+    {%set step = 10%}
+    {% for floatLevel in 0..product.unity.floatableLevel %}
+        {%set step = step / 10 %}
+    {%endfor%}
+    <input type="number" step="{{step}}" name="{{shopForm.quantity.vars.full_name}}" id="{{shopForm.comment.vars.id}}"> {{product.unity.abreviation}}
+    <textarea name="{{shopForm.comment.vars.full_name}}" id="{{shopForm.comment.vars.id}}" placeholder="Inscrivez ici un commentaire"></textarea>
+    {{form_widget(shopForm.productReference)}}
+    {{form_widget(shopForm._token)}}
+    <input type="submit" class="" value="{{'commander'|trans}}" />
+
+</form>

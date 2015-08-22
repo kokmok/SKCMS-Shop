@@ -5,6 +5,7 @@ namespace SKCMS\ShopBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 
 class PromotionType extends \SKCMS\CoreBundle\Form\EntityType
 {
@@ -17,16 +18,12 @@ class PromotionType extends \SKCMS\CoreBundle\Form\EntityType
 	parent::buildForm($builder, $options);
         $builder
             ->add('name')
-            ->add('percent')
-            ->add('xPlusOne')
-            ->add('dateStart')
-            ->add('dateEnd')
+            ->add('percent',null,['required'=>false])
+            ->add('xPlusOne',null,['required'=>false])
+            ->add($builder->create('dateStart','skscms_datetime')->addViewTransformer(new DateTimeToStringTransformer()))
+            ->add($builder->create('dateEnd','skscms_datetime')->addViewTransformer(new DateTimeToStringTransformer()))
             ->add('active')
-            ->add('creationDate')
-            ->add('updateDate')
-            ->add('draft')
-            ->add('userCreate')
-            ->add('userUpdate')
+            ->add('picture','skimage')
         ;
     }
     
