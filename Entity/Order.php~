@@ -5,12 +5,12 @@ namespace SKCMS\ShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Command
+ * Order
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="SKCMS\ShopBundle\Entity\CommandRepository")
+ * @ORM\Entity(repositoryClass="SKCMS\ShopBundle\Entity\OrderRepository")
  */
-class Command
+class Order
 {
     /**
      * @var integer
@@ -43,12 +43,12 @@ class Command
     private $feeTVAC;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\CommandStatus")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\OrderStatus")
      */
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="SKCMS\ShopBundle\Entity\CommandStatusLog", mappedBy="command")
+     * @ORM\OneToMany(targetEntity="SKCMS\ShopBundle\Entity\OrderStatusLog", mappedBy="order")
      */
     private $statusLogs;
     
@@ -63,6 +63,25 @@ class Command
      * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Delivery")
      */
     private $delivery;
+    
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="SKCMS\ShopBundle\Entity\Cart")
+     */
+    private $cart;
+    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\UserBundle\Entity\Address")
+     */
+    private $billingAddress;
+    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\UserBundle\Entity\Address")
+     */
+    private $deliveryAddress;
+    
     
     
     public function __construct() {
@@ -85,7 +104,7 @@ class Command
      * Set date
      *
      * @param \DateTime $date
-     * @return Command
+     * @return Order
      */
     public function setDate($date)
     {
@@ -108,7 +127,7 @@ class Command
      * Set feeHTVA
      *
      * @param float $feeHTVA
-     * @return Command
+     * @return Order
      */
     public function setFeeHTVA($feeHTVA)
     {
@@ -131,7 +150,7 @@ class Command
      * Set feeTVAC
      *
      * @param float $feeTVAC
-     * @return Command
+     * @return Order
      */
     public function setFeeTVAC($feeTVAC)
     {
@@ -153,10 +172,10 @@ class Command
     /**
      * Set status
      *
-     * @param \SKCMS\ShopBundle\CommandStatus $status
-     * @return Command
+     * @param \SKCMS\ShopBundle\OrderStatus $status
+     * @return Order
      */
-    public function setStatus(\SKCMS\ShopBundle\CommandStatus $status = null)
+    public function setStatus(\SKCMS\ShopBundle\Entity\OrderStatus $status = null)
     {
         $this->status = $status;
 
@@ -166,7 +185,7 @@ class Command
     /**
      * Get status
      *
-     * @return \SKCMS\ShopBundle\CommandStatus 
+     * @return \SKCMS\ShopBundle\OrderStatus 
      */
     public function getStatus()
     {
@@ -176,10 +195,10 @@ class Command
     /**
      * Add statusLogs
      *
-     * @param \SKCMS\ShopBundle\Entity\CommandStatusLog $statusLogs
-     * @return Command
+     * @param \SKCMS\ShopBundle\Entity\OrderStatusLog $statusLogs
+     * @return Order
      */
-    public function addStatusLog(\SKCMS\ShopBundle\Entity\CommandStatusLog $statusLogs)
+    public function addStatusLog(\SKCMS\ShopBundle\Entity\OrderStatusLog $statusLogs)
     {
         $this->statusLogs[] = $statusLogs;
 
@@ -189,9 +208,9 @@ class Command
     /**
      * Remove statusLogs
      *
-     * @param \SKCMS\ShopBundle\Entity\CommandStatusLog $statusLogs
+     * @param \SKCMS\ShopBundle\Entity\OrderStatusLog $statusLogs
      */
-    public function removeStatusLog(\SKCMS\ShopBundle\Entity\CommandStatusLog $statusLogs)
+    public function removeStatusLog(\SKCMS\ShopBundle\Entity\OrderStatusLog $statusLogs)
     {
         $this->statusLogs->removeElement($statusLogs);
     }
@@ -210,7 +229,7 @@ class Command
      * Set user
      *
      * @param \SKCMS\UserBundle\Entity\User $user
-     * @return Command
+     * @return Order
      */
     public function setUser(\SKCMS\UserBundle\Entity\User $user = null)
     {
@@ -233,7 +252,7 @@ class Command
      * Set delivery
      *
      * @param \SKCMS\ShopBundle\Entity\Delivery $delivery
-     * @return Command
+     * @return Order
      */
     public function setDelivery(\SKCMS\ShopBundle\Entity\Delivery $delivery = null)
     {

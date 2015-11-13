@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * 
  */
 class CartProduct
 {
@@ -24,7 +25,7 @@ class CartProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="quantity", type="float")
      */
     private $quantity;
     
@@ -34,9 +35,18 @@ class CartProduct
     private $cart;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="SKCMS\CoreBundle\Entity\EntityReference",cascade="all")
      */
+    private $productReference;
+    
     private $product;
+    
+    /**
+     *
+     * @var text
+     * @ORM\Column(name="comment",type="text",nullable=true)
+     */
+    private $comment;
     
     
 
@@ -82,7 +92,7 @@ class CartProduct
     public function setCart(\SKCMS\ShopBundle\Entity\Cart $cart = null)
     {
         $this->cart = $cart;
-
+        $this->cart->addProduct($this);
         return $this;
     }
 
@@ -96,26 +106,103 @@ class CartProduct
         return $this->cart;
     }
 
+    
     /**
-     * Set product
+     * Get comment
      *
-     * @param \SKCMS\ShopBundle\Entity\Product $product
+    */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+    
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+        return $this;
+    }
+
+    
+    
+
+    /**
+     * Set productReference
+     *
+     * @param \SKCMS\CoreBundle\Entity\EntityReference $productReference
      * @return CartProduct
      */
-    public function setProduct(\SKCMS\ShopBundle\Entity\Product $product = null)
+    public function setProductReference(\SKCMS\CoreBundle\Entity\EntityReference $productReference = null)
     {
-        $this->product = $product;
-
+        $this->productReference = $productReference;
+        $this->product = $productReference->getEntity();
         return $this;
     }
 
     /**
-     * Get product
+     * Get productReference
      *
-     * @return \SKCMS\ShopBundle\Entity\Product 
+     * @return \SKCMS\CoreBundle\Entity\EntityReference 
      */
+    public function getProductReference()
+    {
+        return $this->productReference;
+    }
+    
+    
+    public function onLoad()
+    {
+        $this->setProduct($this->productReference->getEntity()); 
+    }
+    
     public function getProduct()
     {
-        return $this->product;
+        return $this->productReference->getEntity();
     }
+    
+    public function setProduct(SKBaseProduct $product)
+    {
+        $this->product = $product;
+        return $this;
+    }
+    
+    public function getTotal()
+    {
+        if ($this->getProduct() !== null)
+        {
+            return $this->getProduct()->getPrice()->getAmount() * $this->quantity .' '.$this->getProduct()->getPrice()->getCurrency();
+        }
+        return null;
+    }
+    public function getTotalHTVA()
+    {
+        if ($this->getProduct() !== null)
+        {
+            $quantity = $this->quantity;
+            $amount = $this->getProduct()->getPrice()->getAmount();
+            if ( \SKCMS\FrontBundle\Twig\SKCMSAdminExtension::validPromotion($this->getProduct()->getPromotion()))
+            {
+                if ($this->getProduct()->getPromotion()->getXPlusOne() !== null)
+                {
+                    $quantity -= floor($this->quantity/($this->getProduct()->getPromotion()->getXPlusOne()+1));
+                }
+                else if ($this->getProduct()->getPromotion()->getPercent() !== null)
+                {
+                    $amount *= ((100-$this->getProduct()->getPromotion()->getPercent())/100);
+                }
+                
+            }
+            $price =  $amount* $quantity;
+            return $price;
+        }
+        return null;
+    }
+    
+    public function getTotalTVAC()
+    {
+        $htva = $this->getTotalHTVA();
+        $tvac = $htva + ($htva * ($this->getProduct()->getVAT()->getValue()/100));
+        return $tvac;
+    }
+    
+    
 }

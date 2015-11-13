@@ -34,12 +34,16 @@ class Price
      */
     protected $currency;
     
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\SKBaseProduct",inversedBy="price")
-     */
-    protected $product;
-
+    
+    
+    
+    public function __construct() {
+        $this->currency = new Currency(); 
+    }
+    
+    public function __toString() {
+        return $this->amount.$this->currency->getSymbol();
+    }
 
     /**
      * Get id
@@ -97,26 +101,5 @@ class Price
         return $this->currency;
     }
 
-    /**
-     * Set product
-     *
-     * @param \SKCMS\ShopBundle\Entity\SKBaseProduct $product
-     * @return Price
-     */
-    public function setProduct(\SKCMS\ShopBundle\Entity\SKBaseProduct $product = null)
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return \SKCMS\ShopBundle\Entity\SKBaseProduct 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
+    
 }

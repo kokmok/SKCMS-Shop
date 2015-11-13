@@ -43,6 +43,9 @@ class Currency extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     private $symbol;
 
 
+    public function __toString() {
+        return $this->symbol;
+    }
     /**
      * Get id
      *

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class CommandStatusLog
+class OrderStatusLog
 {
     /**
      * @var integer
@@ -30,15 +30,15 @@ class CommandStatusLog
     
     /**
      *
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\CommandStatus")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\OrderStatus")
      */
     private $status;
     
     /**
      *
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Command", inversedBy="statusLogs")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Order", inversedBy="statusLogs")
      */
-    private $command;
+    private $order;
 
     
     public function __construct() 
@@ -82,10 +82,10 @@ class CommandStatusLog
     /**
      * Set status
      *
-     * @param \SKCMS\ShopBundle\Entity\CommandStatus $status
+     * @param \SKCMS\ShopBundle\Entity\OrderStatus $status
      * @return CartStatusLog
      */
-    public function setStatus(\SKCMS\ShopBundle\Entity\CommandStatus $status = null)
+    public function setStatus(\SKCMS\ShopBundle\Entity\OrderStatus $status = null)
     {
         $this->status = $status;
 
@@ -95,7 +95,7 @@ class CommandStatusLog
     /**
      * Get status
      *
-     * @return \SKCMS\ShopBundle\Entity\CommandStatus 
+     * @return \SKCMS\ShopBundle\Entity\OrderStatus 
      */
     public function getStatus()
     {
@@ -103,25 +103,25 @@ class CommandStatusLog
     }
 
     /**
-     * Set command
+     * Set order
      *
-     * @param \SKCMS\ShopBundle\Entity\Command $command
+     * @param \SKCMS\ShopBundle\Entity\Order $order
      * @return CartStatusLog
      */
-    public function setCommand(\SKCMS\ShopBundle\Entity\Command $command = null)
+    public function setOrder(\SKCMS\ShopBundle\Entity\Order $order = null)
     {
-        $this->command = $command;
-
+        $this->order = $order;
+        
         return $this;
     }
 
     /**
-     * Get command
+     * Get order
      *
-     * @return \SKCMS\ShopBundle\Entity\Command 
+     * @return \SKCMS\ShopBundle\Entity\Order 
      */
-    public function getCommand()
+    public function getOrder()
     {
-        return $this->command;
+        return $this->order;
     }
 }

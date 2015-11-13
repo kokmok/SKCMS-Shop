@@ -10,6 +10,28 @@ class SKBaseProductType extends \SKCMS\CoreBundle\Form\EntityType
 {
 
     /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+	parent::buildForm($builder, $options);
+        $builder
+            ->add('title')
+            ->add('category')
+            ->add('price',new PriceType())
+            ->add('weight')
+            ->add('promotion')
+            ->add('vat')
+            ->add('unity')
+            ->add('picture', 'skimage')
+
+
+        ;
+    }
+    
+    
+    /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -31,14 +31,14 @@ class Promotion extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="percent", type="integer")
+     * @ORM\Column(name="percent", type="integer",nullable=true)
      */
     private $percent;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="xPlusOne", type="integer")
+     * @ORM\Column(name="xPlusOne", type="integer",nullable=true)
      */
     private $xPlusOne;
 
@@ -49,6 +49,7 @@ class Promotion extends \SKCMS\CoreBundle\Entity\SKBaseEntity
      */
     private $dateStart;
 
+                
     /**
      * @var \DateTime
      *
@@ -62,8 +63,17 @@ class Promotion extends \SKCMS\CoreBundle\Entity\SKBaseEntity
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
+    
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="SKCMS\CoreBundle\Entity\SKImage",cascade={"all"})
+     * 
+     */
+    private $picture;
 
-
+    public function __toString() {
+        return $this->name;
+    }
     public function __construct() {
         parent::__construct();
         $this->dateEnd = new \DateTime();
@@ -216,5 +226,20 @@ class Promotion extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     public function getActive()
     {
         return $this->active;
+    }
+    
+    public function isActive()
+    {
+        return $this->active;
+    }
+    
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    public function setPicture(\SKCMS\CoreBundle\Entity\SKImage $picture)
+    {
+        $this->picture = $picture;
     }
 }

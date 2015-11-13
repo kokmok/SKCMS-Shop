@@ -19,11 +19,7 @@ class CurrencyType extends \SKCMS\CoreBundle\Form\EntityType
             ->add('name')
             ->add('iso')
             ->add('symbol')
-            ->add('creationDate')
-            ->add('updateDate')
-            ->add('draft')
-            ->add('userCreate')
-            ->add('userUpdate')
+            
         ;
     }
     

@@ -12,7 +12,16 @@ use SKCMS\CoreBundle\Slug\SKSlug as SKSlug;
  * 
  */
 
-class SKBaseProduct extends SKBaseEntity{
+class SKBaseProduct extends SKBaseEntity
+{
+   
+   
+    
+    /** 
+     * @ORM\Column(name="id",type="integer") 
+     */
+    protected $id;
+    
     /**
      * @Gedmo\Slug(fields={"title"},updatable=false)
      * @Gedmo\Translatable
@@ -30,33 +39,53 @@ class SKBaseProduct extends SKBaseEntity{
     
     /**
      *
-     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Category",inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Category")
      */
     protected $category;
     
     /**
      *
-     * @ORM\OneToMany(targetEntity="SKCMS\ShopBundle\Entity\Price",mappedBy="product")
+     * @ORM\OneToOne(targetEntity="SKCMS\ShopBundle\Entity\Price",cascade="all")
      */
-    protected $prices;
+    protected $price;
+    
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="SKCMS\CoreBundle\Entity\SKImage",cascade="all")
+     */
+    protected $picture;
     
     /**
      *
      * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\Promotion")
      */
     protected $promotion;
+    
     /**
      *
      * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\VAT")
      */
     protected $vat;
     
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="SKCMS\ShopBundle\Entity\ProductUnity")
+     */
+    protected $unity;
+    
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="weight",type="float",nullable=true)
+     */
+    protected $weight;
 
     
     public function __construct()
     {
         parent::__construct();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->weight = 0;
         
     }
     
@@ -119,19 +148,15 @@ class SKBaseProduct extends SKBaseEntity{
         return $this->category;
     }
     
-    public function addPrice(Price $price)
+   
+    public function getPrice()
     {
-        $this->prices->add($price);
-        return $this;
+        return $this->price;
     }
-    public function removePrice(Price $price)
+    public function setPrice(Price $price)
     {
-        $this->prices->remove($price);
+        $this->price = $price;
         return $this;
-    }
-    public function getPrices()
-    {
-        return $this->prices;
     }
     
     public function setPromotion(Promotion $promotion)
@@ -154,6 +179,38 @@ class SKBaseProduct extends SKBaseEntity{
     public function getVat()
     {
         return $this->vat;
+    }
+    
+    public function setUnity(ProductUnity $unity)
+    {
+        $this->unity = $unity;
+        return $this;
+    }
+    
+    public function getUnity()
+    {
+        return $this->unity;
+    }
+   
+    public function setPicture(\SKCMS\CoreBundle\Entity\SKImage $picture)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+    
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+        return $this;
     }
 
     

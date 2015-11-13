@@ -1,0 +1,40 @@
+#add Product to cart
+skcms_shop_addproduct:  
+    path: /shop/add-product
+    defaults: {_controller: SKCMSShopBundle:Cart:addProduct}
+
+skcms_shop_addproduct_json:  
+    path: /shop/add-product/json
+    defaults: {_controller: SKCMSShopBundle:Cart:addProductJson}
+
+skcms_shop_removeproduct_json:  
+    path: /shop/add-product/json/{cartProductId}
+    defaults: {_controller: SKCMSShopBundle:Cart:RemoveProductJson}
+
+skcms_shop_ordervalidatecart:  
+    path: /shop/validation/cart/{cartId}/{goBack}
+    defaults: {_controller: SKCMSShopBundle:Order:validateCart, cartId: null,goBack: null}
+
+skcms_shop_orderdelivery:  
+    path: /shop/validation/delivery/{orderId}/{goBack}
+    defaults: {_controller: SKCMSShopBundle:Order:delivery,goBack: null}
+
+skcms_shop_orderaddresses:  
+    path: /shop/validation/addresses/{orderId}/{goBack}
+    defaults: {_controller: SKCMSShopBundle:Order:addresses,goBack: null}
+skcms_shop_orderconfirm:  
+    path: /shop/validation/confirm/{orderId}
+    defaults: {_controller: SKCMSShopBundle:Order:confirm}
+skcms_shop_orderconfirmed:  
+    path: /shop/validation/confirmed/{orderId}
+    defaults: {_controller: SKCMSShopBundle:Order:confirmed}
+skcms_shop_orderduplicate:  
+    path: /shop/order/duplicate/{orderId}
+    defaults: {_controller: SKCMSShopBundle:Order:duplicate}
+
+skcms_shop_orderlist:  
+    path: /my-orders
+    defaults: {_controller: SKCMSShopBundle:Front:myOrders}
+skcms_shop_orderview:  
+    path: /my-orders/{orderId}
+    defaults: {_controller: SKCMSShopBundle:Front:orderView}

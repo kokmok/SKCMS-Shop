@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DeliveryRuleType extends \SKCMS\CoreBundle\Form\EntityType
+class DeliveryRuleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -14,16 +14,12 @@ class DeliveryRuleType extends \SKCMS\CoreBundle\Form\EntityType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+
         $builder
             ->add('name')
             ->add('maxWeight')
             ->add('fee')
-            ->add('creationDate')
-            ->add('updateDate')
-            ->add('draft')
-            ->add('userCreate')
-            ->add('userUpdate')
+            
         ;
     }
     

@@ -18,11 +18,9 @@ class DeliveryType extends \SKCMS\CoreBundle\Form\EntityType
         $builder
             ->add('name')
             ->add('delay')
-            ->add('creationDate')
-            ->add('updateDate')
-            ->add('draft')
-            ->add('userCreate')
-            ->add('userUpdate')
+            ->add('addressRequired',null,['required'=>false])
+            ->add('rules','collection', ['type'=> new DeliveryRuleType(),'allow_add'=> true,'allow_delete' => true,'by_reference' => false])
+                
         ;
     }
     

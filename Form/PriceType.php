@@ -18,7 +18,9 @@ class PriceType extends \SKCMS\CoreBundle\Form\EntityType
         $builder
             ->add('amount')
             ->add('currency')
-            ->add('product')
+            ->remove('slug')
+            ->remove('draft')
+            
         ;
     }
     

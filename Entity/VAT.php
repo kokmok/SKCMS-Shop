@@ -36,6 +36,9 @@ class VAT extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     private $value;
 
 
+    public function __toString() {
+        return $this->name;
+    }
     /**
      * Get id
      *

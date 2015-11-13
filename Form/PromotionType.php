@@ -22,6 +22,7 @@ class PromotionType extends \SKCMS\CoreBundle\Form\EntityType
             ->add('xPlusOne',null,['required'=>false])
             ->add($builder->create('dateStart','skscms_datetime')->addViewTransformer(new DateTimeToStringTransformer()))
             ->add($builder->create('dateEnd','skscms_datetime')->addViewTransformer(new DateTimeToStringTransformer()))
+
             ->add('active',null,['required'=>false])
             ->add('picture','skimage')
         ;

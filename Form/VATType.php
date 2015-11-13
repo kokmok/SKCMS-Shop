@@ -18,11 +18,7 @@ class VATType extends \SKCMS\CoreBundle\Form\EntityType
         $builder
             ->add('name')
             ->add('value')
-            ->add('creationDate')
-            ->add('updateDate')
-            ->add('draft')
-            ->add('userCreate')
-            ->add('userUpdate')
+           
         ;
     }
     

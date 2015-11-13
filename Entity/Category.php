@@ -29,13 +29,36 @@ class Category extends \SKCMS\CoreBundle\Entity\SKBaseEntity
      */
     private $name;
     
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="SKCMS\ShopBundle\Entity\SKBaseProduct",mappedBy="category")
-     */
+    
     protected $products;
 
+    /**
+     * @Gedmo\Slug(fields={"name"},updatable=false)
+     * @Gedmo\Translatable
+     * @ORM\Column(length=128)
+     * 
+     */
+    protected $slug;
+    
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="SKCMS\CoreBundle\Entity\SKImage",cascade="all")
+     */
+    protected $picture;
+    
+    /**
+     *
+     * @var text
+     * @ORM\Column(name="decsription",type="text")
+     */
+    protected $description;
 
+    
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
     /**
      * Get id
      *
@@ -75,6 +98,7 @@ class Category extends \SKCMS\CoreBundle\Entity\SKBaseEntity
      */
     public function __construct()
     {
+        parent::__construct();
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -110,6 +134,12 @@ class Category extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     public function getProducts()
     {
         return $this->products;
+    }
+    
+    public function setProducts(\Doctrine\Common\Collections\ArrayCollection $products)
+    {
+        $this->products = $products;
+        return $this;
     }
 
     /**
@@ -157,4 +187,28 @@ class Category extends \SKCMS\CoreBundle\Entity\SKBaseEntity
     {
         return $this->userUpdate;
     }
+    
+    public function setPicture(\SKCMS\CoreBundle\Entity\SKImage $picture)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+    
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        
+        return $this;
+    }
+
 }

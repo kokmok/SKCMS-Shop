@@ -17,7 +17,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class GenerateProductCommand extends GenerateEntityCommand
 {
     const CLASS_PARENT = '\\SKCMS\\ShopBundle\\Entity\\SKBaseProduct';
-    const REPO_PARENT = '\\SKCMS\\ShopBundle\\Repository\\SKBaseProductRepository';
+    const REPO_PARENT = '\\SKCMS\\ShopBundle\\Entity\\SKBaseProductRepository';
     
     protected function configure()
     {
