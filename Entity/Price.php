@@ -42,7 +42,8 @@ class Price
     }
     
     public function __toString() {
-        return $this->amount.$this->currency->getSymbol();
+        
+        return null !== $this->currency ? $this->amount.$this->currency->getSymbol() : $this->amount;
     }
 
     /**
