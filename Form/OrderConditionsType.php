@@ -16,7 +16,7 @@ class OrderConditionsType extends AbstractType
     {
 	
         $builder
-            ->add('conditionsAccepted')
+            ->add('conditionsAccepted','checkbox',['required'=>true])
         ;
     }
     

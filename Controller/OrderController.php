@@ -146,13 +146,13 @@ class OrderController extends Controller{
         }
         
         $addresses = $this->getUser()->getAddresses();
-        if ($order->getDeliveryAddress() === null)
+        if ($order->getDeliveryAddress() === null && count($addresses))
         {
             $deliveryAddress = clone $addresses[0];
             $deliveryAddress->resetId(null);
             $order->setDeliveryAddress($deliveryAddress);
         }
-        if ($order->getBillingAddress() === null)
+        if ($order->getBillingAddress() === null && count($addresses))
         {
             $billingAddress = clone $addresses[0];
             $billingAddress->resetId(null);
@@ -168,8 +168,10 @@ class OrderController extends Controller{
         if ($request->getMethod() == 'POST')
         {
             $form->handleRequest($request);
+
             if ($form->isValid())
             {
+
                 $this->getDoctrine()->getManager()->persist($order);
                 $this->getDoctrine()->getManager()->flush();
                 
@@ -231,7 +233,7 @@ class OrderController extends Controller{
         return $response;
     }
     
-    private function cloneProducts($products,$newCart)
+    protected function cloneProducts($products,$newCart)
     {
         $newProducts = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($products as $product)
@@ -247,8 +249,8 @@ class OrderController extends Controller{
         return $newProducts;
                 
     }
-    
-    public function duplicateAction($orderId)
+
+    protected function duplicateAction($orderId)
     {
         $order = $this->getOrder($orderId);
         
@@ -285,8 +287,8 @@ class OrderController extends Controller{
         return $this->render('SKCMSShopBundle:Order:confirmed.html.twig');
          
     }
-    
-    private function invalidOrder($orderId)
+
+    protected function invalidOrder($orderId)
     {
         $url = $this->generateUrl('skcms_shop_orderconfirmed',['orderId'=>$orderId]);
         return $this->redirect($url);
@@ -303,8 +305,8 @@ class OrderController extends Controller{
         
         return parent::render($view, $parameters, $response);
     }
-    
-    private function isValidOrder(Order $order)
+
+    protected function isValidOrder(Order $order)
     {
         if ($order->isConditionsAccepted())
         {
